@@ -1,4 +1,4 @@
 .env/*
 **/__pychache
 **/*.env
-**/data/*
+**/data/taxonomy/*

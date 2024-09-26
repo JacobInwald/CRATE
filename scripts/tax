@@ -1,3 +1,7 @@
+
+tmp_dir="tmp"
+
+
 #---
 ## Taxonomy of Buffer Overflows Build function.
 ## 	:param $1 : file name, example being data/taxonomy/115-v1.0.0/src/basic-00001-large.c
@@ -15,15 +19,15 @@ function build() {
   dir_name=$(dirname $1)
   base_name=${1##*/}
   base_name=${base_name%.*}
+  mkdir -p $tmp_dir
 
-  if [ -z "$2" ]; then
-    gcc -I "$dir_name/src/include" -fsanitize=bounds -c $1  -o ".temp/$base_name.o" 
-    gcc -I "$dir_name/src/include" -fsanitize=bounds ".temp/$base_name.o" -o ".temp/$base_name" 
+  if [ -z "$2" ]; then 
+    gcc $1 -o "$tmp_dir/$base_name" 
+    return
   fi
   
   
-  gcc -I "$dir_name/src/include" -fsanitize=bounds "$2" -c $1  -o ".temp/$base_name.o" 
-  gcc -I "$dir_name/src/include" -fsanitize=bounds "$2" ".temp/$base_name.o" -o ".temp/$base_name" 
+  gcc  "$2" $1 -o "$tmp_dir/$base_name" 
 }
 
 #---
@@ -37,28 +41,33 @@ function run() {
   fi
   base_name=${1##*/}
   base_name=${base_name%.*}
-  ./".temp/$base_name"
+
+  ./"$tmp_dir/$base_name"
+  echo $?
 }
+
 
 #---
 ## Taxonomy of Buffer Overflows Build and Run function.
-##   :param $1 : file name, example being data/taxonomy/115-v1.0.0/src/basic-00001-large.c
 #---
 function build_run() {
   if [ -z "$1" ]; then
   echo "Usage: build_run <file>"
   return
   fi
+
   build $1 $2
   run $1
 }
+
 
 #---
 ## Taxonomy of Buffer Overflows Clean function.
 #---
 function clean() {
-  rm -rf .temp/*
+  rm -rf $tmp_dir
 }
+
 
 #---
 ## Taxonomy of Buffer Overflows Help function.
@@ -71,5 +80,24 @@ function help() {
   echo "  build_run <file> : Build and Run the file"
   echo "  clean : Clean the temp directory"
 }
+
+
+#---
+## Runs though build, run and clean, prints a value of 1 if it passes and 0 if it fails
+#---
+function check() {
+  if [ -z "$1" ]; then
+  echo "Usage: check <file> <flags: str>"
+  return
+  fi
+
+  build $1 $2
+  run $1
+  clean
+
+}
+
+
+
 
 "$@"
