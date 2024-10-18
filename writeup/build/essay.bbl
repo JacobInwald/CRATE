@@ -1,0 +1,40 @@
+\begin{thebibliography}{6}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Cimpanu(2019)]{microsoft70}
+Catalin Cimpanu.
+\newblock Microsoft: 70 percent of all security bugs are memory safety issues, 2019.
+\newblock URL \url{https://www.zdnet.com/article/microsoft-70-percent-of-all-security-bugs-are-memory-safety-issues/}.
+
+\bibitem[Cimpanu(2020)]{chrome70}
+Catalin Cimpanu.
+\newblock Chrome: 70 percent of all security bugs are memory safety issues, 2020.
+\newblock URL \url{https://www.zdnet.com/article/chrome-70-of-all-security-bugs-are-memory-safety-issues/}.
+
+\bibitem[Google(2023)]{google2023ossfuzz}
+Google.
+\newblock Oss-fuzz, 2023.
+\newblock URL \url{https://google.github.io/oss-fuzz/}.
+
+\bibitem[LLVM(2024)]{llvm2024sanitizer}
+LLVM.
+\newblock Sanitizer coverage, 2024.
+\newblock URL \url{https://clang.llvm.org/docs/SanitizerCoverage.html\#tracing-control-flow}.
+
+\bibitem[Sass(2015)]{giac2014heartbleed}
+Jeff Sass.
+\newblock The role of static analysis in heartbleed.
+\newblock 2015.
+\newblock URL \url{https://www.giac.org/paper/gsec/36189/role-static-analysis-heartbleed/143117}.
+
+\bibitem[Steeley(1989)]{don1989morris}
+Don Steeley.
+\newblock A tour of the worm.
+\newblock 1989.
+\newblock URL \url{https://collections.lib.utah.edu/details?id=702918}.
+
+\end{thebibliography}

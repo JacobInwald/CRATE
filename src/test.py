@@ -2,12 +2,6 @@ import sys
 import subprocess 
 import os 
     
-
-file="data/"
-
-if not os.path.exists('foo'): 
-    f = open('foo.c', 'w') 
-    f.write(prog) 
-    f.close() 
-    subprocess.call(["gcc", "foo.c", "-ofoo", "-std=c99", '-w', '-Ofast']) 
-subprocess.call(["./foo"], stdin = sys.stdin) 
+# example compilation:
+# * gcc data/test/fuzz-harness.c -o tmp/basic
+# * AFL_SKIP_CPU_FREQ=1 afl-fuzz -Q -i data/afl_in -o out -m none -- tmp/basic

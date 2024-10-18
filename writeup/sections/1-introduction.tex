@@ -1,0 +1,92 @@
+C and C++ are both prone to a class of bugs known as memory safety errors (memory errors). 
+Memory errors occur when memory is accessed in an undefined manner, allowing the program to write/read in unintended ways to arbritary regions of memory.
+This can lead to critical vulnerabilities that attackers can exploit. 
+These errors have long been known about and long been exploited, from the Morris Worm in 1989 (\cite{don1989morris}) to Heartbleed in 2012 (\cite{giac2014heartbleed}).
+Indeed, Microsoft has found that 70\% of all its security defects in 2006-2018 were memory safety failures  (\cite{microsoft70}), and the Chrome team similarly found 70\% of all its vulnerabilities are memory safety issues  (\cite{chrome70}).  % -- Shamelessly nicked, need to reword this shit
+Programming languages have since been developed that are memory safe and prevent such errors, but C and C++ remain widespread due to their speed and precision. 
+It is infeasible to rewrite the language to prevent memory errors, and migrating away from C and C++ is not always possible for some hardware. 
+Therefore, other approaches are required to aid in the preventation of memory errors. 
+The key ones to discuss sit at development level (static analysis and fuzz testing) and production level (compiler hardening options).
+
+\section{Static Analysis}
+
+Static analysis for security assurance has been around since ITS4's release in early 2000; a simplistic syntactic matcher to rules that indicated vulnerabilities i.e. use of \texttt{strcpy()}\cite{??}.
+Since then, static analysis tools have become significantly more sophisticated and complex, but the aim has always been the same - to catch security problems without executing the code. 
+Static analysis tools will examine the program source code for flaws, marking sections of code that have potential bugs for a human programmer to then go over and resolve. 
+These tools are incredibly effective at finding known bugs, but often rely on bugs being known. 
+One of the more famous examples of this was Heartbleed, a memory error which was overlooked by static analysis tools until after it's discovery and subsequent use in exploits (\cite{giac2014heartbleed}).
+Another key challenge with static anlysis is the reduction of false positives and false negatives. 
+Static analysis tools walk the line between false positives (reporting a bug where there is none) and false negatives (not reporting a bug where there is one). 
+Both situations lead to different outcomes, with false positives leading to overhead for developers and false negatives leading to a false sense of security. 
+Static analysis is now a strongly recommended part of the development lifecyce (SEI CERT C and C++), but is known to be fallible and is not a ``cure-all" to security bugs.
+
+\section{Fuzz Testing}
+
+A fuzz tester (fuzzers) is a tool that iteratively mutates random input in an attempt to find security vulnerabilities for a piece of software. 
+Fuzzers have been proven to be incredibly effective; as of 2023, a prominent fuzzer, OSS-Fuzz, has located over 10,000 vulnerabilities and 36,000 bugs across 1,000 projects (\cite{google2023ossfuzz}).
+Fuzzers differ to static analysis in that they \emph{execute} the code while testing. 
+Fuzzers rely on instrumentation, where extra code is added at compile-time to allow the fuzzer more access to the internals of program. 
+This instrumentation can vary from sanitisers, which throw warnings or errors when dangerous behaviour is detected from the program i.e. out of bounds access, to tracing the execution path of the software or control flow (\cite{llvm2024sanitizer}).
+The instrumentation will guide the mutations made by the fuzzer to iteratively improve vulnerability discovery. 
+The upshot of this is that fuzzers can discover novel vulnerabilties not specified by the creator of the tool. 
+These tools provide powerful security testing abilities, however, like static analysis, they rely on the developers using them effectively during development and the production lifecycle. 
+
+\section{Security Hardening}
+It is almost guaranteed that production grade software will contain flaws. 
+While static and dynamic approaches have been effective in culling these flaws, some will still slip through the gaps (i.e. Heartbleed).
+Therefore, security hardening is often used alongside these approaches. 
+Security hardening attempts to prevent the memory unsafe behaviour of a language by introducing checks or transformations to workaround the potential flaws in the program. 
+In GCC, different hardening features are enabled via the use of different command-line options such as \texttt{-fstack-protector-strong} or \texttt{-fPIe}. 
+There are numerous hardening options to pick from, with each option aiming to solve a different problem.
+For example, the option \texttt{-fPIe} enables Address Space Layout Randomization, making \texttt{return2libcc} attacks difficult on 32-bit systems and near impossible on 64-bit systems \cite{??}. 
+Shown in Figure \ref{fig:hardening-options}, is a list of security compiler options for GCC (and Clang and Binutils TODO: Remove those ones). 
+One of those options, \texttt{-fhardened}, enables a subset of other compiler options to provide a default hardening configuration for a ``naive'' developer. 
+
+
+\begin{figure}[ht]
+    \centering
+    
+    \begin{longtable}[c]{p{0.4\textwidth} | p{0.59\textwidth}}
+        \textbf{Compiler Flag} & \textbf{Description} \\
+        \hline
+        \texttt{-D\_FORTIFY\_SOURCE} & Fortify sources with compile- and run-time checks for unsafe libc usage and buffer overflows. Some fortification levels can impact performance. Requires \texttt{-O1} or higher, may require prepending \texttt{-U\_FORTIFY\_SOURCE}. \\
+        \texttt{-D\_GLIBCXX\_ASSERTIONS}  & Precondition checks for C++ standard library calls. Can impact performance.\\
+        \texttt{-fstrict-flex-arrays=3} & Consider a trailing array in a struct as a flexible array if declared as []\\
+        \texttt{-fstack-clash-protection} & Enable run-time checks for variable-size stack allocation validity. Can impact performance.\\
+        \texttt{-fstack-protector-strong} & Enable run-time checks for stack-based buffer overflows. Can impact performance.\\
+        \texttt{-fcf-protection=full} & Enable control-flow protection against return-oriented programming (ROP) and jump-oriented programming (JOP) attacks on x86\_64\\
+        \texttt{-mbranch-protection=standard} & Enable branch protection against ROP and JOP attacks on AArch64\\
+        \texttt{-Wl,-z,nodlopen} & Restrict dlopen(3) calls to shared objects\\
+        \texttt{-Wl,-z,noexecstack} & Enable data execution prevention by marking stack memory as non-executable\\
+        \texttt{-Wl,-z,relro} \emph{or} \texttt{-Wl,-z,now} & Mark relocation table entries resolved at load-time as read-only. \texttt{-Wl,-z,now} can impact startup performance.\\
+        \texttt{-fPIE -pie} & Build as position-independent executable. Can impact performance on 32-bit architectures.\\
+        \texttt{-fPIC -shared} & Build as position-independent code. Can impact performance on 32-bit architectures.\\
+        \texttt{-fno-delete-null-pointer-checks} & Force retention of null pointer checks\\
+        \texttt{-fno-strict-overflow} & Integer overflow may occur\\
+        \texttt{-fno-strict-aliasing} & Do not assume strict aliasing\\
+        \texttt{-ftrivial-auto-var-init} & Perform trivial auto variable initialization\\
+        \texttt{-fexceptions} & Enable exception propagation to harden multi-threaded C code\\
+        \texttt{-fhardened} & Enable pre-determined set of hardening options in GCC\\
+    \end{longtable}
+    \caption{From the Compiler Options Hardening Guide for C and C++}
+    \label{fig:hardening-options}
+\end{figure}
+% \begin{figure}
+%     \centering
+%     \begin{longtable}[c]{c | c}
+        
+%     \end{longtable}
+%     % \begin{minipage}[c]{\textwidth}
+%     %     % \begin{multicol*}
+%     %     %     \begin{longtable}{p | p}
+%     %     %         Test & Test \\
+%     %     %     \end{longtable}
+%     %     % \end{multicol*}
+%     % \end{minipage}
+% \end{figure}
+
+% \section{Research Questions}
+% \subsection{Test Sets}
+
+
+
