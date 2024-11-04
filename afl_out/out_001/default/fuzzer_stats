@@ -1,17 +1,17 @@
-start_time        : 1729283988
-last_update       : 1729284001
-run_time          : 13
-fuzzer_pid        : 197891
-cycles_done       : 12
-cycles_wo_finds   : 12
+start_time        : 1730734687
+last_update       : 1730734695
+run_time          : 7
+fuzzer_pid        : 174214
+cycles_done       : 5
+cycles_wo_finds   : 5
 time_wo_finds     : 0
-fuzz_time         : 13
+fuzz_time         : 7
 calibration_time  : 0
 cmplog_time       : 0
 sync_time         : 0
 trim_time         : 0
-execs_done        : 3843
-execs_per_sec     : 292.80
+execs_done        : 2068
+execs_per_sec     : 266.15
 execs_ps_last_min : 0.00
 corpus_count      : 2
 corpus_favored    : 1
@@ -27,12 +27,12 @@ bitmap_cvg        : 0.03%
 saved_crashes     : 3
 saved_hangs       : 0
 last_find         : 0
-last_crash        : 1729283988
+last_crash        : 1730734687
 last_hang         : 0
-execs_since_crash : 3802
+execs_since_crash : 1994
 exec_timeout      : 20
 slowest_exec_ms   : 0
-peak_rss_mb       : 9
+peak_rss_mb       : 10
 cpu_affinity      : 0
 edges_found       : 21
 total_edges       : 65536
@@ -42,9 +42,7 @@ auto_dict_entries : 0
 testcache_size    : 1
 testcache_count   : 1
 testcache_evict   : 0
-afl_banner        : tmp/basic
+afl_banner        : tmp/test-001
 afl_version       : ++4.22a
 target_mode       : qemu shmem_testcase 
-command_line      : afl-fuzz -Q -i data/seeds -o out -m none -- tmp/basic
-virgin_bytes     : 235[fe] 4628[fe] 5620[bf] 6000[fe] 12400[fe] 14418[fe] 16065[fe] 17414[fe] 18483[fe] 22825[fe] 28082[fe] 30230[fe] 31317[fe] 32099[fe] 32136[fe] 36910[fe] 39619[fe] 40525[fe] 57377[fe] 60410[fe] 61054[fe]
-var_bytes        :
+command_line      : afl-fuzz -Q -i afl_in -o afl_out/out_001 -m none -- tmp/test-001

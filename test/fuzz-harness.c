@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include /*START_TEST_CASE_NAME*/ "test-001.c" /*END_TEST_CASE_NAME*/
+#include "test-001.c" /* REPLACE */
 
 #define BUFFER_SIZE 1024 // set buffer size
 

@@ -1,6 +1,6 @@
 Command line used to find this crash:
 
-afl-fuzz -Q -i data/seeds -o out -m none -- tmp/basic
+afl-fuzz -Q -i afl_in -o afl_out/out_001 -m none -- tmp/test-001
 
 If you can't reproduce a bug outside of afl-fuzz, be sure to set the same
 memory limit. The limit used for this fuzzing session was 0 B.

@@ -4,7 +4,7 @@ This project invesigates which combination of compiler options for gcc provide t
 
 ## Installation
 
-Nothings been written here so wait for updates
+Nothing been written here so wait for updates
 
 ## Contributions
 
