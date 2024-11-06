@@ -1,4 +1,11 @@
 /*
+    ID:         001
+    NAME:       strcpy-small
+    TYPE:       0 (buffer)
+    ACCESS:     w
+*/
+
+/*
     Fuzzing harness for the test cases written. Intention is to replace the #include line with the given test case and then compile with given options.
 */
 
@@ -6,7 +13,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "test-001.c" /* REPLACE */
+void bad(char *input)
+{
+    printf(input);
+}
 
 #define BUFFER_SIZE 1024 // set buffer size
 

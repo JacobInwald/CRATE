@@ -5,3 +5,5 @@
 **/data/new_tax
 .vscode/
 tmp/
+**/afl_out/
+**/build

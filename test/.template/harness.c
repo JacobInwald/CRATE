@@ -1,0 +1,44 @@
+#include "template.c"
+#include <unistd.h>
+
+#ifndef __AFL_FUZZ_TESTCASE_LEN
+ssize_t fuzz_len;
+#define __AFL_FUZZ_TESTCASE_LEN fuzz_len
+unsigned char fuzz_buf[1024000];
+#define __AFL_FUZZ_TESTCASE_BUF fuzz_buf
+#define __AFL_FUZZ_INIT() void sync(void);
+#define __AFL_LOOP(x) ((fuzz_len = read(0, fuzz_buf, sizeof(fuzz_buf))) > 0 ? 1 : 0)
+#define __AFL_INIT() sync()
+#endif
+
+__AFL_FUZZ_INIT();
+
+int main()
+{
+
+    // anything else here, e.g. command line arguments, initialization, etc.
+
+#ifdef __AFL_HAVE_MANUAL_CONTROL
+    __AFL_INIT();
+#endif
+
+    unsigned char *buf = __AFL_FUZZ_TESTCASE_BUF; // must be after __AFL_INIT
+                                                  // and before __AFL_LOOP!
+
+    while (__AFL_LOOP(10000))
+    {
+
+        int len = __AFL_FUZZ_TESTCASE_LEN; // don't use the macro directly in a
+                                           // call!
+
+        if (len < 8)
+            continue; // check for a required/useful minimum input length
+
+        /* Setup function call, e.g. struct target *tmp = libtarget_init() */
+        /* Call function to be fuzzed, e.g.: */
+        tgt(buf, len);
+        /* Reset state. e.g. libtarget_free(tmp) */
+    }
+
+    return 0;
+}
