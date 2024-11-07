@@ -11,11 +11,11 @@ bb_build () {
     field=($name) # split+glob  operator
     name=${field[-1]}
 
-    target="bb_$name$(echo "$1" | tr -d ' ')"
+    target="bb_$name$(echo "$@" | tr -d ' ')"
 
     mkdir -p "$(dirname "$0")/build"
 
-    echo "Building $target with options $1 ..."
+    echo "Building $target with options $@ ..."
     gcc -o "$dir/build/$target" "$dir/bb_harness.c" "$@"
 
 }
@@ -36,11 +36,11 @@ build () {
 
     echo $name
 
-    target="$name$(echo "$1" | tr -d ' ')"
+    target="$name$(echo "$@" | tr -d ' ')"
 
     mkdir -p "$dir/build"
 
-    echo "Building $target with options $1 ..."
+    echo "Building $target with options $@ ..."
 
     afl-gcc -o "$dir/build/$target" "$dir/harness.c" "$@"
 
