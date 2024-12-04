@@ -85,8 +85,77 @@ One of those options, \texttt{-fhardened}, enables a subset of other compiler op
 %     % \end{minipage}
 % \end{figure}
 
-% \section{Research Questions}
-% \subsection{Test Sets}
 
+\section{Leading Examples}
 
+In the previous section, the concept of security hardening was discussed, alongside some brief explanations of options available to a programmer. 
+In this section, we will discuss the chosen flags for analysis, alongside some engineered examples to demonstrate some common use cases that they attempt to solve. 
+We will start with the simpler flags, and then continue from there. 
 
+\subsection{Stack Canaries}
+
+Stack canaries \citep{cowan1998stackguard} are a security hardening option that aim to prevent buffer overflows on the stack. 
+The concept behind their implementation is very simple: some known word value is set before the return pointer on the stack frame and after the local variables, shown in Figure~\ref{fig:stackframe}. 
+This value is then checked against the known value before the program jumps to the return address, and aborts the program if the canary has changed.
+In order for the local variables to overwrite the return address in the stack frame, the canary will need to be overwritten. 
+This means that an attacker needs to know the value of the canary in order to bypass the protection, which can prove challenging. 
+
+\begin{figure}[H]
+    \begin{subfigure}[l]{.5\textwidth}
+        \centering
+        \stackFrameTable
+        \caption{A normal stack frame without a canary}
+    \end{subfigure}%
+    \begin{subfigure}[r]{.5\textwidth}
+        \centering
+        \stackFrameTableCanary
+        \caption{A stack frame with a canary inserted}
+    \end{subfigure}
+    \caption{Stack frame with and without canaries}
+    \label{fig:stackframe}
+\end{figure}
+
+In Figure~\ref{fig:canarycode}, we see some sample assembly code after stack canaries have been added in. 
+As shown, the canary value is loaded in the word between the return address and then checked before the function returns to the return address given. 
+If the canary is different to what it was set to, the program throws a stack check fail exception and then exits.
+
+\begin{figure}[H]
+\begin{gaslst}
+; start of main()
+push   %rbp             ; preserves previous return pointer
+mov    %rsp,%rbp       ; save return pointer to %rbp
+sub    \$0x40,%rsp      ; makes sure there's space for local variables (changes from 0x32 to 0x40 with and without canaries)
+mov    %edi,-0x34(%rbp)
+mov    %rsi,-0x40(%rbp)
+; inserted code
+mov    %fs:0x28,%rax  ; load canary value into %rax
+mov    %rax,-0x8(%rbp)  ; store canary value 8 bytes before the return address
+xor    %eax,%eax
+
+; start code block for main, left unchanged 
+;                       ...
+; end code block for main
+
+; inserted code 
+mov    -0x8(%rbp),%rdx  ; load canary value into %rdx
+sub    %fs:0x28,%rdx    ; compare with saved canary value
+je     0x4011c9 <main+147>  ; skip error if not broken
+call   0x401030 <__stack_chk_fail@plt> ; throw stack smashing error  
+; unchanged 
+leave
+ret    ; exit
+\end{gaslst}
+
+\caption{x86 assembly code after compilation with the flag}
+\label{fig:canarycode}
+\end{figure}
+
+Stack canaries are effective in preventing overflow attacks on the return address, where the buffer is overflowed sequentially from a local buffer. 
+However, this doesn't prevent corruption of local variables. 
+For example, in Figure~\ref{fig:stackframe}, if local var 1 contains a boolean value used in a check and local var 2 can be arbitrarily written, then an attacker can change the value of local var 1 with impunity. 
+This could lead to them passing checks they shouldn't be able to. 
+Regardless, canaries are often a simple and relatively effective method of preventing sequential buffer overflows affecting the return address of a stack frame. 
+
+\subsection{Fortify Source}
+
+THe 

@@ -1,0 +1,13 @@
+{
+  "name": "006",
+  "rule-id": "ARR",
+  "rule-name": "Arrays",
+  "subrule": "ARR30-C",
+  "description": "The function uses strcpy with no length checks",
+  "CWE": ["CWE-119", "CWE-121"],
+  "result": {
+    "type": "int",
+    "description": "Checks if out of bounds character is 'a'",
+    "good": "0"
+  }
+}

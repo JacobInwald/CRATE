@@ -1,0 +1,229 @@
+
+\renewcommand{\t}[1]{\texttt{#1}}
+
+\newcommand{\stackFrameTable}{
+    \begin{tikzpicture}[%
+        auto,
+        block/.style={
+          rectangle,
+          draw=black,
+          thick,
+          text width=7.5em,
+          align=center,
+          minimum height=2em,
+        },
+        dotsstyle/.style={
+            rectangle,
+            thick,
+            text width=7.5em,
+            align=center,
+            minimum height=2em
+          }
+    ]
+        \node (dots1) [dotsstyle] 
+            {$\qquad$ \dots $\qquad$};
+        \node (args2) [block, below=-1pt of dots1] 
+            {argv[1]};
+        \node (args1) [block, below=-1pt of args2, rectangle]
+            {argv[0]};
+        \node (sebp) [block, below=-1pt of args1, rectangle]
+            {saved \%ebp};
+        \node (rbp) [block, below=-1pt of sebp, rectangle]
+            {return pointer (\%rbp)};
+        \node (l1) [block, below=-1pt of rbp, rectangle]
+            {local var 1};
+        \node (l2) [block, below=-1pt of l1, rectangle]
+            {local var 2};
+        \node (dots2) [dotsstyle, below=-1pt of l2] 
+            {$\qquad$ \dots $\qquad$};
+
+        \draw [thick, rounded corners=.5em] 
+        ([xshift=0.4pt]dots1.north west) rectangle ([xshift=-0.4pt]dots2.south east);
+
+        \node (ebp) [left=2.5em of sebp] {EBP};
+        \draw[->, very thick]        (ebp)   -- (sebp);
+
+        \node (esp) [left=2.5em of l2] {ESP};
+        \draw[->, very thick]        (esp)   -- (l2);
+
+        \node (highaddrlabel) [above= 2pt of dots1] {
+            High Memory Addresses
+        };
+
+        \node (lowaddrlabel) [below= 2pt of dots2] {
+            Low Memory Addresses
+        };
+
+
+        \draw[->, very thick] 
+            ([xshift=1em]dots2.south east) --
+            ([xshift=1em]dots1.north east)  node[midway,below, sloped] () {stack growth};
+    \end{tikzpicture}
+}
+
+\newcommand{\stackFrameTableCanary}{
+    \begin{tikzpicture}[%
+        auto,
+        block/.style={
+          rectangle,
+          draw=black,
+          thick,
+          text width=7.5em,
+          align=center,
+          minimum height=2em,
+        },
+        block2/.style={
+          rectangle,
+          draw=black,
+          fill=green!20,
+          thick,
+          text width=7.5em,
+          align=center,
+          minimum height=2em,
+        },
+        dotsstyle/.style={
+            rectangle,
+            thick,
+            text width=7.5em,
+            align=center,
+            minimum height=2em
+          }
+    ]
+        \node (dots1) [dotsstyle] 
+            {$\qquad$ \dots $\qquad$};
+        \node (args2) [block, below=-1pt of dots1] 
+            {argv[1]};
+        \node (args1) [block, below=-1pt of args2, rectangle]
+            {argv[0]};
+        \node (sebp) [block, below=-1pt of args1, rectangle]
+            {saved \%ebp};
+        \node (rbp) [block, below=-1pt of sebp, rectangle]
+            {return pointer (\%rbp)};
+        \node (canary) [block2, below=-1pt of rbp, rectangle]
+            {canary value};
+        \node (l1) [block, below=-1pt of canary, rectangle]
+            {local var 1};
+        \node (l2) [block, below=-1pt of l1, rectangle]
+            {local var 2};
+        \node (dots2) [dotsstyle, below=-1pt of l2] 
+            {$\qquad$ \dots $\qquad$};
+
+        \draw [thick, rounded corners=.5em] 
+        ([xshift=0.4pt]dots1.north west) rectangle ([xshift=-0.4pt]dots2.south east);
+
+        \node (ebp) [left=2.5em of sebp] {EBP};
+        \draw[->, very thick]        (ebp)   -- (sebp);
+
+        \node (esp) [left=2.5em of l2] {ESP};
+        \draw[->, very thick]        (esp)   -- (l2);
+
+        \node (highaddrlabel) [above= 2pt of dots1] {
+            High Memory Addresses
+        };
+
+        \node (lowaddrlabel) [below= 2pt of dots2] {
+            Low Memory Addresses
+        };
+
+        \draw[->, very thick] 
+            ([xshift=1em]dots2.south east) --
+            ([xshift=1em]dots1.north east)  node[midway,below, sloped] () {stack growth};
+    \end{tikzpicture}
+}
+
+
+\newcommand{\canaryAssembly}{
+\begin{figure}[H]
+    % \begin{subfigure}[l]{.5\textwidth}
+        % \canaryAssembly
+\begin{lstlisting}[language=C]
+-- unchanged
+push   \%rbp             ; preserves previous return pointer
+mov    \%rsp,\%rbp       ; save return pointer to %rbp
+sub    \$0x40,\%rsp      ; makes sure there's space for local variables
+mov    \%edi,-0x34(\%rbp)
+mov    \%rsi,-0x40(\%rbp)
+-- inserted code
+mov    \%fs:0x28,\%rax  ; load canary value into %rax
+mov    \%rax,-0x8(\%rbp);
+xor    \%eax,\%eax
+-- code block for main, left unchanged 
+-- inserted code --
+mov    -0x8(\%rbp),\%rdx
+sub    \%fs:0x28,\%rdx
+je     0x4011c9 <main+147>
+call   0x401030 <\_\_stack\_chk\_fail@plt>     
+-- unchanged 
+leave
+ret    
+\end{lstlisting}
+
+\caption{A normal stack frame without a canary}
+        % \end{subfigure}%
+        % \begin{subfigure}[r]{.5\textwidth}
+        %     \caption{A stack frame with a canary inserted}
+        %     \centering
+        %     \canaryAssembly
+        % \end{subfigure}
+        \label{fig:canarycode}
+    \end{figure}
+}
+
+
+% \newcommand{\temp}{
+% \begin{listing}[h]
+%     \centering
+%     \caption{x86 Code}
+%     \begin{minted}[linenos,frame=single]{nasm}
+% jmp    0x401170 <main+74>
+% mov    -0x10(%rbp),%rax
+% movzbl (%rax),%edx
+% mov    -0x8(%rbp),%rax
+% mov    %dl,(%rax)
+% mov    -0x8(%rbp),%rax
+% add    $0x1,%rax
+% mov    %rax,-0x8(%rbp)
+% mov    -0x10(%rbp),%rax
+% add    $0x1,%rax
+% mov    %rax,-0x10(%rbp)
+% mov    -0x10(%rbp),%rax
+% movzbl (%rax),%eax
+% test   %al,%al
+% jne    0x40114b <main+37>
+% lea    -0x30(%rbp),%rax
+% mov    %rax,%rsi
+% mov    $0x402010,%edi
+% mov    $0x0,%eax
+% call   0x401030 <printf@plt>
+% mov    $0x0,%eax
+% leave
+% ret
+     
+%     \end{minted}
+% \end{listing}
+
+
+
+% \begin{listing}[h]
+%     \centering
+%     \caption{C Code}
+%     \begin{minted}[linenos,frame=single]{c}
+% \# include "stdio.h"
+
+% int main(int argc, char *argv[])
+% {
+%     char buffer[20];
+%     char *to = buffer;
+%     char *from = argv[1];
+%     while (*from)
+%     {
+%         *to = *from;
+%         *to++;
+%         *from++;
+%     }
+%     printf("Your buffer is %s\n", buffer);
+% }
+%     \end{minted}
+% \end{listing}
+
+% }

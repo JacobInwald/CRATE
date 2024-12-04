@@ -1,4 +1,4 @@
-\begin{thebibliography}{6}
+\begin{thebibliography}{7}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -14,6 +14,11 @@ Catalin Cimpanu.
 Catalin Cimpanu.
 \newblock Chrome: 70 percent of all security bugs are memory safety issues, 2020.
 \newblock URL \url{https://www.zdnet.com/article/chrome-70-of-all-security-bugs-are-memory-safety-issues/}.
+
+\bibitem[Cowan et~al.(1998)Cowan, Pu, Maier, Walpole, Bakke, Beattie, Grier, Wagle, Zhang, and Hinton]{cowan1998stackguard}
+Crispan Cowan, Calton Pu, Dave Maier, Jonathan Walpole, Peat Bakke, Steve Beattie, Aaron Grier, Perry Wagle, Qian Zhang, and Heather Hinton.
+\newblock Stackguard: automatic adaptive detection and prevention of buffer-overflow attacks.
+\newblock In \emph{USENIX security symposium}, volume~98, pages 63--78. San Antonio, TX, 1998.
 
 \bibitem[Google(2023)]{google2023ossfuzz}
 Google.

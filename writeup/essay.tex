@@ -8,6 +8,52 @@
 \usepackage{longtable}
 \usepackage{multicol}
 \usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\input{tables_figures.tex}
+\usetikzlibrary{positioning}
+\usetikzlibrary{quotes}
+\tikzset{every edge quotes/.style =
+          { 
+            fill = white,
+            sloped,
+            align=center,
+            auto
+          }
+        }
+         
+\usepackage[newfloat, outputdir=/home/pinwald/Desktop/diss_proj/writeup/build]{minted}
+
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+
+\tcbuselibrary{listings, minted, skins}
+
+\tcbset{listing engine=minted}
+
+\newtcblisting{gaslst}{
+      listing only,
+      minted language=gas,
+      frame hidden,
+      enhanced,
+      minted options= {
+         breaklines,
+         autogobble,
+         linenos,
+         breakbefore=., 
+         fontsize=\footnotesize, 
+         numbersep=2mm
+         }
+      }
+
+\definecolor{inline}{RGB}{187,57,82}
+\definecolor{bg}{RGB}{22,43,58}
+
+\setminted[gas]{fontsize=\footnotesize}
+
+
+
 % --------------------------
 
 
@@ -82,6 +128,7 @@ Any acknowledgements go here.
 \input{sections/1-introduction.tex}
 
 
+\input{sections/2-methodology.tex}
 
 % \chapter{Conclusions}
 
