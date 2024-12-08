@@ -1,3 +1,5 @@
+\chapter{Background}\label{sec:background}
+
 C and C++ are both prone to a class of bugs known as memory safety errors (memory errors). 
 Memory errors occur when memory is accessed in an undefined manner, allowing the program to write/read in unintended ways to arbritary regions of memory.
 This can lead to critical vulnerabilities that attackers can exploit. 
@@ -122,14 +124,14 @@ If the canary is different to what it was set to, the program throws a stack che
 \begin{figure}[H]
 \begin{gaslst}
 ; start of main()
-push   %rbp             ; preserves previous return pointer
-mov    %rsp,%rbp       ; save return pointer to %rbp
-sub    \$0x40,%rsp      ; makes sure there's space for local variables (changes from 0x32 to 0x40 with and without canaries)
+push   %rbp             ; save previous %rbp
+mov    %rsp,%rbp       ;  new frame pointer for main()
+sub    \$0x40,%rsp      ; makes sure there's space for local variables (adds an extra word of space when canaries are active)
 mov    %edi,-0x34(%rbp)
 mov    %rsi,-0x40(%rbp)
 ; inserted code
-mov    %fs:0x28,%rax  ; load canary value into %rax
-mov    %rax,-0x8(%rbp)  ; store canary value 8 bytes before the return address
+mov    %fs:0x28,%rax  ; %rax = canary value
+mov    %rax,-0x8(%rbp)  ; %rbp-8 = canary value
 xor    %eax,%eax
 
 ; start code block for main, left unchanged 
@@ -137,8 +139,8 @@ xor    %eax,%eax
 ; end code block for main
 
 ; inserted code 
-mov    -0x8(%rbp),%rdx  ; load canary value into %rdx
-sub    %fs:0x28,%rdx    ; compare with saved canary value
+mov    -0x8(%rbp),%rdx  ; %rdx = canary value
+sub    %fs:0x28,%rdx    ; compare %rdx with saved canary value
 je     0x4011c9 <main+147>  ; skip error if not broken
 call   0x401030 <__stack_chk_fail@plt> ; throw stack smashing error  
 ; unchanged 
@@ -158,4 +160,59 @@ Regardless, canaries are often a simple and relatively effective method of preve
 
 \subsection{Fortify Source}
 
-THe 
+This section refers to the \t{D\_FORTIFY\_SOURCE} flag, which hardens inbuilt C99 library functions \citep{}. 
+The intention is to add size checks to functions that don't implement them, such as \t{strcpy} or \t{memcpy}. 
+This prevents library functions from writing over the size limit of a buffer, stopping buffer overflows. 
+\t{D\_FORTIFY\_SOURCE} has 3 modes with the most hardened being \t{D\_FORTIFY\_SOURCE=3}, and the lower options providing more compatibility with legacy code. 
+
+In Figure~\ref{fig:fortifyasm}, we see the disassembled fortified \t{strcpy} function. 
+As shown, there is an additional check before calling \t{strcpy} which ensures that source array is smaller than the destination array
+
+\begin{figure}[H]
+    \begin{gaslst}
+        endbr64
+        ; setup frame
+        push   %rbp         ; save previous %rbp
+        mov    %rsp,%rbp    ; new frame pointer for __strcpy_chk()
+        push   %r13         
+        mov    %rdx,%r13 ; %r13 = %rdx | %rdx stores size of dest array
+        push   %r12
+        mov    %rdi,%r12
+        mov    %rsi,%rdi
+        push   %rbx
+        mov    %rsi,%rbx
+        sub    $0x8,%rsp
+
+        ; perform check
+        call   0x7ffff7dd7510 <*ABS*+0xafb80@plt> ; calls size on source array
+        cmp    %r13,%rax    ; size(src) - size(dest)
+        jae    0x7ffff7ed8470 <__strcpy_chk+64> ; jump to last line if source size is greater or equal to destination size
+
+        ; remove stack frame
+        add    $0x8,%rsp
+        mov    %rbx,%rsi
+        lea    0x1(%rax),%rdx
+        mov    %r12,%rdi
+        pop    %rbx
+        pop    %r12
+        pop    %r13
+        pop    %rbp
+        
+        jmp    0x7ffff7dd76c0 <*ABS*+0xac430@plt>   ; jump to strcpy 
+        call   0x7ffff7ed6a30 <__chk_fail>  ; throw exception
+\end{gaslst}
+
+\caption{x86 assembly code for the fortified strcpy() function (\_\_strcpy\_chk) after compilation}
+\label{fig:fortifyasm}
+\end{figure}
+
+
+This hardening option is a very simple transformation, and is effective in making \t{glibc} functions such as \t{strcpy} and \t{memcpy} safer.
+However, this option relies on the program being able to correctly find the size of the source array at runtime, something that may not be concrete \citep{struct-hack}. 
+
+
+\subsection{Stack Clashing}
+
+
+
+
