@@ -1,0 +1,8 @@
+[submodule "writeup"]
+	path = writeup
+	url = https://github.com/JacobInwald/diss-writeup.git
+
+[submodule "ripe64"]
+	path = ripe64
+	url = https://github.com/JacobInwald/RIPE64.git
+
