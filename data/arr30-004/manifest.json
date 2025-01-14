@@ -1,0 +1,13 @@
+{
+  "name": "004",
+  "rule-id": "ARR",
+  "rule-name": "Arrays",
+  "subrule": "ARR30-C",
+  "description": "This noncompliant code example shows the flawed logic in the Windows Distributed Component Object Model (DCOM) Remote Procedure Call (RPC) interface that was exploited by the W32.Blaster.Worm. The error is that the while loop in the GetMachineName() function (used to extract the host name from a longer string) is not sufficiently bounded. When the character array pointed to by pwszTemp does not contain the backslash character among the first TABLE + 1 elements, the final valid iteration of the loop will dereference past the end pointer, resulting in exploitable  undefined behavior 47. In this case, the actual exploit allowed the attacker to inject executable code into a running program. Economic damage from the Blaster worm has been estimated to be at least $525 million [Pethia 2003]. To get this to run some variable names have been changed",
+  "CWE": ["CWE-119", "CWE-121"],
+  "result": {
+    "type": "int",
+    "description": "Checks if out of bounds character is 'a'",
+    "good": "0"
+  }
+}

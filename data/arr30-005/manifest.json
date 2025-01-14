@@ -1,0 +1,13 @@
+{
+  "name": "005",
+  "rule-id": "ARR",
+  "rule-name": "Arrays",
+  "subrule": "ARR30-C",
+  "description": "The function insert_in_table() in this noncompliant code example uses an otherwise valid index to attempt to store a value in an element just past the end of an array. First, the function incorrectly validates the index pos against the size of the buffer. When pos is initially equal to size, the function attempts to store value in a memory location just past the end of the buffer.Second, when the index is greater than size, the function modifies size before growing the size of the buffer. If the call to realloc() fails to increase the size of the buffer, the next call to the function with a value of pos equal to or greater than the original value of size will again attempt to store value in a memory location just past the end of the buffer or beyond. Third, the function violates INT30-C. Ensure that unsigned integer operations do not wrap, which could lead to wrapping when 1 is added to pos or when size is multiplied by the size of int. For a discussion of this programming error in the Common Weakness Enumeration database, see CWE-122, 'Heap-based Buffer Overflow,' and CWE-129, 'Improper Validation of Array Index' [MITRE 2013].",
+  "CWE": ["CWE-122", "CWE-129"],
+  "result": {
+    "type": "int",
+    "description": "Checks if out of bounds character is 'a'",
+    "good": "0"
+  }
+}
