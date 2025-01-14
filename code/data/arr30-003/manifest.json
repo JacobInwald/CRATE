@@ -1,0 +1,13 @@
+{
+  "name": "003",
+  "rule-id": "ARR",
+  "rule-name": "Arrays",
+  "subrule": "ARR30-C",
+  "description": "Forming out of bounds pointer values and writing to it",
+  "CWE": ["CWE-119", "CWE-121"],
+  "result": {
+    "type": "int",
+    "description": "Boolean value of whether the write is successfully performed or not",
+    "good": "0"
+  }
+}
