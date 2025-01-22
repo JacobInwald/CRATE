@@ -1,3 +1,18 @@
+# Research
+
+This just covers some TODOs, and the exploits looked at and worked on. 
+Failed/Unfinished exploits are in the .attempted folder (may be renamed later)
+
+## TODO List
+
+- [ ] Update dockers to use Debian Trixie
+- [ ] Get crashmailv1.6 obviously working
+- [ ] Improve the stack clashes, do more research 
+- [ ] More Exploits see <https://github.com/qazbnm456/awesome-cve-poc/blob/master/Stack-Clash.md>
+- [ ] See if using zsh as the interactive shell prompt in `make` makes it better
+- [ ] TBD 
+
+
 ## Exploits (exploit-db)
 
 The following exploits come up when searching <exploit-db.com> with the filters {"platform": linux, "type": local}.
@@ -20,7 +35,7 @@ Crossed out ones have been considered and deemed not useful for reasons listed.
     - Open-Source
     - C-based
     - Don't think it is memory corruption related (edit: checked and yes no ROP or memory corruption)
-- ~~[**binutils 2.37 - Objdump Segmentation Fault**](https://www.exploit-db.com/exploits/50858): ~~
+- ~~[**binutils 2.37 - Objdump Segmentation Fault**](https://www.exploit-db.com/exploits/50858):~~
     - NIST reviewed and said not an exploit 
 - [ ] [**Linux Kernel 2.6.19 < 5.9 - 'Netfilter Local Privilege Escalation**](https://www.exploit-db.com/exploits/50135):
     - Open-Source
@@ -115,3 +130,14 @@ Crossed out ones have been considered and deemed not useful for reasons listed.
 - ~~[**Ubuntu 18.04 - 'lxd' Privilege Escalation**](https://www.exploit-db.com/exploits/46978):~~
     - Seems a bit convoluted, and not very useful
     - Also not sure if relevant
+- ~~[**Vim < 8.1.1365 / Neovim < 0.3.6 - Arbitrary Code Execution**](https://www.exploit-db.com/exploits/46973):~~
+    - Vim trickery, not relevant
+- [ ] [**MiniFtp - 'parseconf_load_setting' Buffer Overflow**](https://www.exploit-db.com/exploits/46807):
+    - C-based + Open-Source
+    - Correct kind of attack | Relevant
+    - Well Documented, seems simple to verify
+- ~~[**SystemTap 1.3 - MODPROBE_OPTIONS Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/46730):~~
+    - **Verified**
+    - Doesn't seem to be relevant
+
+
