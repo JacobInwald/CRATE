@@ -1,0 +1,24 @@
+--- crashmailv1.6.orig/src/crashmail/pkt.c	2025-01-21 13:20:08.255898279 +0000
++++ crashmailv1.6/src/crashmail/pkt.c	2025-01-21 14:00:08.863259462 +0000
+@@ -551,7 +551,7 @@
+    return(NULL);
+ }
+ 
++time_t lastt_;
+-time_t lastt;
+ uint32_t serial;
+ 
+ struct Pkt *CreatePkt(struct Node4D *dest,struct ConfigNode *node,struct Node4D *orig,uint16_t type)
+@@ -566,10 +566,10 @@
+    do
+    {
+       t=time(NULL);
++      if(t == lastt_) serial++;
+-      if(t == lastt) serial++;
+       else serial=0;
+       if(serial == 256) serial=0;
++      lastt_=t; 
+-      lastt=t; 
+       num = (t<<8) + serial;
+       sprintf(buf2,"%08x.newpkt",num);
+       
