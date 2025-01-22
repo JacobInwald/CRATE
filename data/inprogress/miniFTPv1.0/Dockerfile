@@ -10,7 +10,8 @@ RUN apt-get -y update && \
     libxml2-dev \
     curl \
     ca-certificates \
-    zsh
+    zsh \ 
+    python3
 
 # Install python 2.7 support for the exploit
 ARG PYPY_VERSION=2.7-v7.3.17
@@ -19,22 +20,23 @@ ARG PYPY_URL=https://downloads.python.org/pypy/$PYPY_ROOT.tar.bz2
 # Install pypy itself under /opt and symlink the pypy2 binary into
 # /usr/local/bin so that it appears on the PATH.
 RUN \
-    cd /opt \
-    && curl -L "${PYPY_URL}" | tar -xjf - \
-    && ln -s "/opt/${PYPY_ROOT}/bin/pypy2" /usr/local/bin/pypy2
+  cd /opt \
+  && curl -L "${PYPY_URL}" | tar -xjf - \
+  && ln -s "/opt/${PYPY_ROOT}/bin/pypy2" /usr/local/bin/pypy2
 
+# Install GDB
+RUN apt-get install -y --no-install-recommends gdb
 
 # Install Software
-RUN git clone -c http.sslverify=false --single-branch -b 1.6 https://git.code.sf.net/p/ftnapps/crashmail/code crashmailv1.6
+RUN git clone -c http.sslverify=false --single-branch -b master https://github.com/skyqinsc/MiniFtp miniFTP
 
-
-# Patch an error that happens when compiling with modern gcc
-ADD pkt.patch ./
-RUN patch crashmailv1.6/src/crashmail/pkt.c pkt.patch
-
+ADD Makefile.patch ./
+RUN patch -p1 miniFTP/Makefile ./Makefile.patch 
 
 # Install Exploit
+ADD setup-exploit.sh ./
+RUN chmod +x setup-exploit.sh
+RUN ./setup-exploit.sh
+
 ADD demo-exploit.sh ./
 RUN chmod +x demo-exploit.sh
-ADD exploit.py ./
-RUN chmod +x exploit.py

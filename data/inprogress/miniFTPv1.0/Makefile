@@ -1,5 +1,5 @@
 # Purpose: Makefile for docker image
-IMAGE_NAME=crashmailv1.6
+IMAGE_NAME=miniftpv1.0
 EXITED:=$(shell sudo docker ps -a -q -f status=exited)
 
 
