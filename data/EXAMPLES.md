@@ -1,23 +1,26 @@
-## Examples Tested or To Test
+## Exploits (exploit-db)
 
-- ~~[X] [**Polkit**](https://www.exploit-db.com/exploits/50011):~~
+The following exploits come up when searching <exploit-db.com> with the filters {"platform": linux, "type": local}.
+Crossed out ones have been considered and deemed not useful for reasons listed.
+
+- ~~[**Polkit**](https://www.exploit-db.com/exploits/50011):~~
     - Not Stack Based Attack
-- ~~[X] [**libbabl 0.1.62**](https://www.exploit-db.com/exploits/49259):~
+- ~~[**libbabl 0.1.62**](https://www.exploit-db.com/exploits/49259):~~
     - While relevant to memory corruption, this is an engineered PoC of a library failing to fix memory corruptions errors, so is not relevant. 
 - [ ] [**Sudo 1.8.25p - 'pwfeedback' Buffer Overflow**](https://www.exploit-db.com/exploits/48052):
     - Seems to be a buffer overflow, sudo is C-based and open-source so code is available
     - Will investigate
-- ~~[X] [**Socat Buffer Overflow PoC**](https://www.exploit-db.com/exploits/47999): ~~
+- ~~[**Socat Buffer Overflow PoC**](https://www.exploit-db.com/exploits/47999):~~
     - PoC, doesn't actually exploit anything, and no CVE.
 - [ ] [**ktsuss 1.4 - suid Privilege Escalation**](https://www.exploit-db.com/exploits/47344):
     - Not sure if overflow/Corruption error
     - Open-Source
     - C-based
-- ~~[X] [**Exim 4.87 / 4.91 - Local Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47307):~~
+- ~~[**Exim 4.87 / 4.91 - Local Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47307):~~
     - Open-Source
     - C-based
     - Don't think it is memory corruption related (edit: checked and yes no ROP or memory corruption)
-- ~~[X] [**binutils 2.37 - Objdump Segmentation Fault**](https://www.exploit-db.com/exploits/50858): ~~
+- ~~[**binutils 2.37 - Objdump Segmentation Fault**](https://www.exploit-db.com/exploits/50858): ~~
     - NIST reviewed and said not an exploit 
 - [ ] [**Linux Kernel 2.6.19 < 5.9 - 'Netfilter Local Privilege Escalation**](https://www.exploit-db.com/exploits/50135):
     - Open-Source
@@ -25,9 +28,9 @@
     - Appears to be very powerful memory corruption attack
     - **Verified**
     - Will require work to somehow be able to rebuild only this dependency in Docker
-- ~~[X] [**Apport Privilege Escalation**](https://www.exploit-db.com/exploits/49572):~~
+- ~~[**Apport Privilege Escalation**](https://www.exploit-db.com/exploits/49572):~~
     - Believe this is python based, and not sure if open-source
-- ~~[X] [**Blueman**](https://www.exploit-db.com/exploits/48963):~~
+- ~~[**Blueman**](https://www.exploit-db.com/exploits/48963):~~
     - Not memory corruption/Stack
 - [ ] [**Gnome Fonts Viewer 3.34.0 - Heap Corruption**](https://www.exploit-db.com/exploits/48803):
     - Has potential, DoS attack I believe by corrupting Heap data, could be interesting to see if the hardening measures work
@@ -38,31 +41,77 @@
     - C-based
     - **Verified**
     - separate package and instructions on building from source!
-- ~~[X] [**Diamorphine Rootkit - Signal Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/48131):~~
+- ~~[**Diamorphine Rootkit - Signal Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/48131):~~
     - Rootkit, not correct category
-- ~~[X] [**xglance-bin 11.00 - Privilege Escalation**](https://www.exploit-db.com/exploits/48000):~~
+- ~~[**xglance-bin 11.00 - Privilege Escalation**](https://www.exploit-db.com/exploits/48000):~~
     - Old, and doesn't seem that relevant
 - [ ] [**Reliable Datagram Sockets (RDS) - rds_atomic_free_op NULL pointer dereference Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47957):
     - Abuses null pointer dereference, so in correct category, but may not be entirely relevant to heap
     - Impacts a kernel module so may be much more difficult to exploit
     - **Verified**
     - Open-Source + C-based
-- ~~[X] [**Reptile Rootkit - reptile_cmd Privilege Escalation (Metasploit)**]:~~
+- ~~[**Reptile Rootkit - reptile_cmd Privilege Escalation (Metasploit)**]:~~
     - Rootkit
-- ~~[X] [**Linux Privilege Escalation**](https://www.exploit-db.com/exploits/47779)~~ 
+- ~~[**Linux Privilege Escalation**](https://www.exploit-db.com/exploits/47779)~~
     - Not relevant
-- ~~[X] [**Bash 5.0 Patch 11 - SUID Priv Drop Exploit**](https://www.exploit-db.com/exploits/47726)~~:
+- ~~[**Bash 5.0 Patch 11 - SUID Priv Drop Exploit**](https://www.exploit-db.com/exploits/47726)~~:
     - Not relevant
-- ~~[X] [**GNU Mailutils 3.7 - Privilege Escalation**](https://www.exploit-db.com/exploits/47703)~~:
+- ~~[**GNU Mailutils 3.7 - Privilege Escalation**](https://www.exploit-db.com/exploits/47703)~~:
     - Not relevant
 - [ ] [**ClamAV < 0.102.0 - 'bytecode_vm' Code Execution**](https://www.exploit-db.com/exploits/47687):
     - Open Source + C-based
     - Not sure if actually relevant
-- ~~[X] [**Micro Focus (HPE) Data Protector - SUID Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47580)~~:
+- ~~[**Micro Focus (HPE) Data Protector - SUID Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47580)~~:
     - Closed-Source + Not relevant
-- ~~[X] [**Linux Polkit - pkexec helper PTRACE_TRACEME local root (Metasploit)**](https://www.exploit-db.com/exploits/47543):~~
+- ~~[**Linux Polkit - pkexec helper PTRACE_TRACEME local root (Metasploit)**](https://www.exploit-db.com/exploits/47543):~~
     - Doesn't seem to be relevant
 - [ ] [**X.Org X Server 1.20.4 - Local Stack Overflow**](https://www.exploit-db.com/exploits/47507):
     - Open Source + C-based
     - States to be stack overflow so should be relevant, but may be difficult to pull off. 
-- [ ]
+- ~~[**sudo 1.8.27 - Security Bypass**](https://www.exploit-db.com/exploits/47502):~~
+    - Open Source + C-based
+    - Not relevant
+- ~~[**ASX to MP3 converter 3.1.3.7 - '.asx' Local Stack Overflow (DEP Bypass) (Metasploit)**](https://www.exploit-db.com/exploits/47482):~~
+    - Closed Source
+- ~~[**logrotten 3.15.1 - Privilege Escalation**](https://www.exploit-db.com/exploits/47466):~~
+    - Race condition, not memory corruption
+-  ~~[**ABRT - sosreport Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47421):~~
+    - Seems too complicated to pull off 
+    - Also requires building a kernel module, which may be annoying in Docker 
+    - Look into if need more to do
+    - **Verified**
+- ~~[**ptrace - Sudo Token Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47345):~~
+    - **Verified**
+    - Doesn't seem to be relevant 
+- ~~[**ktsuss 1.4 - suid Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47344):~~
+    - **Verified**
+    - Doesn't seem to be relevant
+- [ ] [**Exim 4.87 / 4.91 - Local Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47307):
+    - **Verified**
+    - Doesn't seem to be relevant, but may be interesting from a `fcf-protection`
+- ~~[**Ghidra (Linux) 9.0.4 - .gar Arbitrary Code Execution**](https://www.exploit-db.com/exploits/47231):~~
+    - **Verified**
+    - Not relevant, path traversal attack instead
+- [ ] [**Linux Kernel < 4.4.0/ < 4.8.0 (Ubuntu 14.04/16.04 / Linux Mint 17/18 / Zorin) - Local Privilege Escalation (KASLR / SMEP)**](https://www.exploit-db.com/exploits/47169):
+    - Kernel Exploit it seems, so C-based + Opensource, but difficult
+    - More [here](https://github.com/xairy/kernel-exploits/tree/master)
+- ~~[**Comtrend-AR-5310 - Restricted Shell Escape**](https://www.exploit-db.com/exploits/47149)~~:
+    - Improper filtering, so not relevant
+- ~~[**Docker - Container Escape**](https://www.exploit-db.com/exploits/47147)~~:
+    - Not relevant
+- [ ] [**Linux - Broken Permission and Object Lifetime Handling for PTRACE_TRACEME**](https://www.exploit-db.com/exploits/47133):
+    - **Verified**
+    - Seems incredibly complicated, and not convinced that this is a memory corruption error
+- ~~[**Serv-U FTP Server - prepareinstallation Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47072):~~
+    - Out of scope, requires FTP server
+- ~~[**Cisco Prime Infrastructure - Runrshell Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47017):~~
+    - Closed-Source
+- [ ] [**Exim 4.87 - 4.91 - Local Privilege Escalation**](https://www.exploit-db.com/exploits/46996):
+    - **Verified**
+    - Not sure if relevant, seems like Improper neutralization, but might be worth testing if easy to set up
+- [ ] [**CentOS 7.6 - 'ptrace_scope' Privilege Escalation**](CentOS 7.6 - 'ptrace_scope' Privilege Escalation):
+    - CentOS is annoying to dockerize I think, and also this seems quite tricky to get work
+    - **Verified**
+- ~~[**Ubuntu 18.04 - 'lxd' Privilege Escalation**](https://www.exploit-db.com/exploits/46978):~~
+    - Seems a bit convoluted, and not very useful
+    - Also not sure if relevant
