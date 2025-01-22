@@ -1,4 +1,4 @@
-# Purpose: Makefile for libiec61850 docker image
+# Purpose: Makefile for docker image
 IMAGE_NAME=crashmailv1.6
 EXITED:=$(shell sudo docker ps -a -q -f status=exited)
 
@@ -9,8 +9,11 @@ clean:
 build:
 	sudo docker build -t $(IMAGE_NAME) . 
 
+run/zsh:
+	sudo docker run -it --entrypoint /bin/zsh $(IMAGE_NAME)
+
 run/bash:
-	sudo docker run -it --entrypoint /bin/sh $(IMAGE_NAME)
+	sudo docker run -it --entrypoint /bin/bash $(IMAGE_NAME)
 
 run/demo:
-	sudo docker run -it -e HARDEN_FLAGS=$(HARDEN_FLAGS) --entrypoint ./demo-exploit.sh $(IMAGE_NAME)
+	sudo docker run -it -e HARDEN_FLAGS="$(HARDEN_FLAGS)" --entrypoint ./demo-exploit.sh $(IMAGE_NAME)

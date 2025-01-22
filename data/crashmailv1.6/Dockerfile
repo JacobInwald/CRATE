@@ -3,24 +3,20 @@ FROM debian:trixie
 WORKDIR /home/
 
 # Install dependencies
-
-
 RUN apt-get -y update && \ 
     apt-get install -y --no-install-recommends git \
     cmake \
     build-essential \
     libxml2-dev \
     curl \
-    ca-certificates
-    
-RUN apt-get -y --fix-missing update && \
-    apt-get install -y zsh
+    ca-certificates \
+    zsh
 
 # Install python 2.7 support for the exploit
 ARG PYPY_VERSION=2.7-v7.3.17
 ARG PYPY_ROOT=pypy$PYPY_VERSION-linux64
 ARG PYPY_URL=https://downloads.python.org/pypy/$PYPY_ROOT.tar.bz2
-# Install pypy itself under /opt and symlink the pypy3 binary into
+# Install pypy itself under /opt and symlink the pypy2 binary into
 # /usr/local/bin so that it appears on the PATH.
 RUN \
     cd /opt \
@@ -29,12 +25,10 @@ RUN \
 
 
 # Install Software
-RUN git clone -c http.sslverify=false https://git.code.sf.net/p/ftnapps/crashmail/code crashmailv1.6 && \
-    cd crashmailv1.6 && \
-    git checkout 1.6
+RUN git clone -c http.sslverify=false --single-branch -b 1.6 https://git.code.sf.net/p/ftnapps/crashmail/code crashmailv1.6
 
-ENV HARDEN_FLAGS=""
 
+# Patch an error that happens when compiling with modern gcc
 ADD pkt.patch ./
 RUN patch crashmailv1.6/src/crashmail/pkt.c pkt.patch
 
