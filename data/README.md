@@ -12,8 +12,54 @@ Failed/Unfinished exploits are in the .attempted folder (may be renamed later)
 - [ ] See if using zsh as the interactive shell prompt in `make` makes it better
 - [ ] TBD 
 
+## Exploits ToDo
 
-## Exploits (exploit-db)
+- [ ] [**ktsuss 1.4 - suid Privilege Escalation**](https://www.exploit-db.com/exploits/47344):
+    - Not sure if overflow/Corruption error
+    - Open-Source
+    - C-based
+- [ ] [**Linux Kernel 2.6.19 < 5.9 - 'Netfilter Local Privilege Escalation**](https://www.exploit-db.com/exploits/50135):
+    - Open-Source
+    - C-based
+    - Appears to be very powerful memory corruption attack
+    - **Verified**
+    - Will require work to somehow be able to rebuild only this dependency in Docker
+- [ ] [**Sudo 1.8.25p - 'pwfeedback' Buffer Overflow**](https://www.exploit-db.com/exploits/48052):
+    - Seems to be a buffer overflow, sudo is C-based and open-source so code is available
+    - Will investigate
+- [ ] [**Gnome Fonts Viewer 3.34.0 - Heap Corruption**](https://www.exploit-db.com/exploits/48803):
+    - Has potential, DoS attack I believe by corrupting Heap data, could be interesting to see if the hardening measures work
+    - Open-Source, but would need some effort to get working on Docker. 
+- [ ] [**OpenSMTPD - OOB Read Local Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/48185):
+    - OOB Read so in correct category. 
+    - Open Source
+    - C-based
+    - **Verified**
+    - separate package and instructions on building from source!
+- [ ] [**Reliable Datagram Sockets (RDS) - rds_atomic_free_op NULL pointer dereference Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47957):
+    - Abuses null pointer dereference, so in correct category, but may not be entirely relevant to heap
+    - Impacts a kernel module so may be much more difficult to exploit
+    - **Verified**
+    - Open-Source + C-based
+- [ ] [**ClamAV < 0.102.0 - 'bytecode_vm' Code Execution**](https://www.exploit-db.com/exploits/47687):
+    - Open Source + C-based
+    - Not sure if actually relevant
+- [ ] [**Exim 4.87 / 4.91 - Local Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47307):
+    - **Verified**
+    - Doesn't seem to be relevant, but may be interesting from a `fcf-protection`
+- [ ] [**Exim 4.87 - 4.91 - Local Privilege Escalation**](https://www.exploit-db.com/exploits/46996):
+    - **Verified**
+    - Not sure if relevant, seems like Improper neutralization, but might be worth testing if easy to set up
+- [ ] [**CentOS 7.6 - 'ptrace_scope' Privilege Escalation**](CentOS 7.6 - 'ptrace_scope' Privilege Escalation):
+    - CentOS is annoying to dockerize I think, and also this seems quite tricky to get work
+    - **Verified**
+- [ ] [**MiniFtp - 'parseconf_load_setting' Buffer Overflow**](https://www.exploit-db.com/exploits/46807):
+    - C-based + Open-Source
+    - Correct kind of attack | Relevant
+    - Well Documented, seems simple to verify
+
+
+## Considered Exploits (exploit-db)
 
 The following exploits come up when searching <exploit-db.com> with the filters {"platform": linux, "type": local}.
 Crossed out ones have been considered and deemed not useful for reasons listed.
