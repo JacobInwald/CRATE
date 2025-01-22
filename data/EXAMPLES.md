@@ -1,9 +1,68 @@
 ## Examples Tested or To Test
 
-- [ ] [Polkit](https://www.exploit-db.com/exploits/50011): Not Stack Based Attack
-- [ ] [libbabl 0.1.62](https://www.exploit-db.com/exploits/49259): While relevant to memory corruption, this is an engineered PoC of a library failing to fix memory corruptions errors, so is not relevant. 
+- ~~[X] [**Polkit**](https://www.exploit-db.com/exploits/50011):~~
+    - Not Stack Based Attack
+- ~~[X] [**libbabl 0.1.62**](https://www.exploit-db.com/exploits/49259):~
+    - While relevant to memory corruption, this is an engineered PoC of a library failing to fix memory corruptions errors, so is not relevant. 
 - [ ] [**Sudo 1.8.25p - 'pwfeedback' Buffer Overflow**](https://www.exploit-db.com/exploits/48052):
     - Seems to be a buffer overflow, sudo is C-based and open-source so code is available
     - Will investigate
-- [ ] [**Socat Buffer Overflow PoC](https://www.exploit-db.com/exploits/47999): PoC, doesn't actually exploit anything, and no CVE.
-- [ ] 
+- ~~[X] [**Socat Buffer Overflow PoC**](https://www.exploit-db.com/exploits/47999): ~~
+    - PoC, doesn't actually exploit anything, and no CVE.
+- [ ] [**ktsuss 1.4 - suid Privilege Escalation**](https://www.exploit-db.com/exploits/47344):
+    - Not sure if overflow/Corruption error
+    - Open-Source
+    - C-based
+- ~~[X] [**Exim 4.87 / 4.91 - Local Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47307):~~
+    - Open-Source
+    - C-based
+    - Don't think it is memory corruption related (edit: checked and yes no ROP or memory corruption)
+- ~~[X] [**binutils 2.37 - Objdump Segmentation Fault**](https://www.exploit-db.com/exploits/50858): ~~
+    - NIST reviewed and said not an exploit 
+- [ ] [**Linux Kernel 2.6.19 < 5.9 - 'Netfilter Local Privilege Escalation**](https://www.exploit-db.com/exploits/50135):
+    - Open-Source
+    - C-based
+    - Appears to be very powerful memory corruption attack
+    - **Verified**
+    - Will require work to somehow be able to rebuild only this dependency in Docker
+- ~~[X] [**Apport Privilege Escalation**](https://www.exploit-db.com/exploits/49572):~~
+    - Believe this is python based, and not sure if open-source
+- ~~[X] [**Blueman**](https://www.exploit-db.com/exploits/48963):~~
+    - Not memory corruption/Stack
+- [ ] [**Gnome Fonts Viewer 3.34.0 - Heap Corruption**](https://www.exploit-db.com/exploits/48803):
+    - Has potential, DoS attack I believe by corrupting Heap data, could be interesting to see if the hardening measures work
+    - Open-Source, but would need some effort to get working on Docker. 
+- [ ] [**OpenSMTPD - OOB Read Local Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/48185):
+    - OOB Read so in correct category. 
+    - Open Source
+    - C-based
+    - **Verified**
+    - separate package and instructions on building from source!
+- ~~[X] [**Diamorphine Rootkit - Signal Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/48131):~~
+    - Rootkit, not correct category
+- ~~[X] [**xglance-bin 11.00 - Privilege Escalation**](https://www.exploit-db.com/exploits/48000):~~
+    - Old, and doesn't seem that relevant
+- [ ] [**Reliable Datagram Sockets (RDS) - rds_atomic_free_op NULL pointer dereference Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47957):
+    - Abuses null pointer dereference, so in correct category, but may not be entirely relevant to heap
+    - Impacts a kernel module so may be much more difficult to exploit
+    - **Verified**
+    - Open-Source + C-based
+- ~~[X] [**Reptile Rootkit - reptile_cmd Privilege Escalation (Metasploit)**]:~~
+    - Rootkit
+- ~~[X] [**Linux Privilege Escalation**](https://www.exploit-db.com/exploits/47779)~~ 
+    - Not relevant
+- ~~[X] [**Bash 5.0 Patch 11 - SUID Priv Drop Exploit**](https://www.exploit-db.com/exploits/47726)~~:
+    - Not relevant
+- ~~[X] [**GNU Mailutils 3.7 - Privilege Escalation**](https://www.exploit-db.com/exploits/47703)~~:
+    - Not relevant
+- [ ] [**ClamAV < 0.102.0 - 'bytecode_vm' Code Execution**](https://www.exploit-db.com/exploits/47687):
+    - Open Source + C-based
+    - Not sure if actually relevant
+- ~~[X] [**Micro Focus (HPE) Data Protector - SUID Privilege Escalation (Metasploit)**](https://www.exploit-db.com/exploits/47580)~~:
+    - Closed-Source + Not relevant
+- ~~[X] [**Linux Polkit - pkexec helper PTRACE_TRACEME local root (Metasploit)**](https://www.exploit-db.com/exploits/47543):~~
+    - Doesn't seem to be relevant
+- [ ] [**X.Org X Server 1.20.4 - Local Stack Overflow**](https://www.exploit-db.com/exploits/47507):
+    - Open Source + C-based
+    - States to be stack overflow so should be relevant, but may be difficult to pull off. 
+- [ ]
