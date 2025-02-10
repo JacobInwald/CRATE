@@ -1,5 +1,5 @@
 # Secure Configurations in the GCC compilers, which recipe of options is best?
-This is my 4th year project from the University of Edinburgh.
+This is my 4th year honours project from the University of Edinburgh.
 This project invesigates which combination of compiler options for gcc provide the best and most secure code, while checking if the different options may interfer with each other.
 
 ## Installation
