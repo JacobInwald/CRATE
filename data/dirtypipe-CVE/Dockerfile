@@ -63,16 +63,13 @@ RUN cd busybox-1.34.1 && \
   make install 
 
 # Create initramfs and add exploit
+ADD init ./busybox-1.34.1/_install/init
 RUN cd busybox-1.34.1/_install && \
   mkdir -p proc sys dev etc etc/init.d && \
-  echo "#!/bin/sh" > init && \
-  echo "mount -t devtmpfs none /dev" >> init && \
-  echo "mount -t proc none /proc" >> init && \
-  echo "mount -t sysfs none /sys" >> init && \
-  echo "exec /bin/sh" >> init && \
   chmod +x init && \
-  mkdir home && \
+  mkdir home && \ 
   cp /home/write_anything home/write_anything 
+
 
 RUN apt install -y cpio
 
