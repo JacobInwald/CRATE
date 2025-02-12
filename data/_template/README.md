@@ -1,14 +1,14 @@
-# Exploit Title: libiec61850 1.3 - Stack Based Buffer Overflow
+# Exploit Title: <exploit_name>
 
-- Exploit Author: Dhiraj Mishra
-- Vendor Homepage: <http://libiec61850.com/libiec61850/>
-- Software Link: <https://github.com/mz-automation/libiec61850>
-- Version: v1.3.0
-- CVE: CVE-2018-18957
+- Exploit Author: <exploit_author>
+- Vendor Homepage: 
+- Software Link: 
+- Version: 
+- CVE: <exploit_cve> 
 
 ## Disclaimer
 
-This is a containerized version of CVE-2018-18957 for research and testing purposes. This was created as part of my final year project in security research. While running this should be safe, there is no guarantee of safety on your machine. I hold no responsibility for any damages caused to others machines as a result of running any of the exploits in this dataset.
+This is a containerized version of <exploit_cve> for research and testing purposes. This was created as part of my final year project in security research. While running this should be safe, there is no guarantee of safety on your machine. I hold no responsibility for any damages caused to others machines as a result of running any of the exploits in this dataset.
 
 ## Instructions 
 
@@ -21,21 +21,8 @@ Use the associated `make` commands to run the example exploit.
 
     make run/demo # Runs an encapsulated demo of the exploit, to test against different hardening combinations set the HARDEN_FLAGS environment variable before running this 
 
-    make run/bash # Opens a shell inside the build container for debugging and exploration. 
-```
-
-## Related Patch
-
-```diff
-hal/ethernet/linux/ethernet_linux.c
-Ethernet_getInterfaceMACAddress(const char* interfaceId, uint8_t* addr)
-memset(&buffer, 0x00, sizeof(buffer));
--strcpy(buffer.ifr_name, interfaceId);
-+strncpy(buffer.ifr_name, interfaceId, IFNAMSIZ);
-ioctl(sock, SIOCGIFHWADDR, &buffer);
+    make run/zsh # Opens a shell inside the build container for debugging and exploration. 
 ```
 
 ## References
 
-- <https://github.com/mz-automation/libiec61850/issues/83>
-- <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-18957>

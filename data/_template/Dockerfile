@@ -1,5 +1,5 @@
 #syntax=docker/dockerfile:1
-FROM debian:trixie
+FROM debian:bullseye-slim
 WORKDIR /home/
 
 
@@ -13,20 +13,26 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends \
     zsh \
     meson \
     ninja-build \
-    wget \ 
+    wget \
     ca-certificates
 
-ENV HARDEN_FLAGS=""
 
-# Add in demo script
-ADD demo-exploit.sh ./
-RUN chmod +x demo-exploit.sh
-
-# Add source code
-RUN git clone -c http.sslVerify=false  https://github.com/<project> code && \
-  cd code && \
-  git fetch && \
-  git checkout  
+# ----------------- SETUP SOURCE ---------------
 
 # Install source code dependencies
-# RUN apt-get -y install 
+RUN apt-get -y install ... 
+
+# Add source code 
+RUN ...
+
+# Instrument build file to allow for hardening culpable file
+RUN ...
+
+# ------------- ADD EXPLOIT -------------
+
+RUN ...
+
+# ---------------- ADD DEMO ----------------
+ADD demo-exploit.sh ./
+RUN chmod +x demo-exploit.sh
+ENV HARDEN_FLAGS=""
