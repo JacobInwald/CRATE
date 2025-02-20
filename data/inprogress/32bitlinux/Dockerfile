@@ -29,20 +29,26 @@ RUN apt-get -y install \
   libelf-dev 
 
 # Add source code and build kernel
-ENV COMMIT="bbf5c979011a099af5dc76498918ed7df445635b" 
+ENV COMMIT="70c707aae3e586f6ebc677ad733a9c3cea32f7ac"
+ENV ARCH="i386"
 RUN wget https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/snapshot/linux-${COMMIT}.tar.gz && \
   tar -xvf linux-${COMMIT}.tar.gz && \ 
   rm linux-${COMMIT}.tar.gz && \
-  mv linux-${COMMIT} linux && \
-  cd linux && \
-  make defconfig && \
-  make -j 8
+  mv linux-${COMMIT} linux
+
+# Required as need to enable the IRQ library for the exploit
+ADD linux.config linux/.config
+
+
+RUN cd linux && \
+  make bzImage -j 8
 
 # Instrument build file to allow for hardening culpable file
 ADD Makefile.patch ./
 RUN cd linux/lib && \
   patch Makefile ../../Makefile.patch
 
+# ADD iptables.patch ./
 
 # ------------- SETUP EMULATION -------------
 # Install dependencies
@@ -51,10 +57,12 @@ RUN apt-get -y install \
   qemu-system-x86 \
   qemu-system-gui \
   qemu-user \
-  cpio
+  cpio \
+  libc6-dev-i386 
 
 # Use buzybox to build a minimal initramfs, ad  d the exploit and then package it up.
 ENV BUSYVER="1.34.1"
+ENV CROSS_COMPILE=""
 RUN wget https://busybox.net/downloads/busybox-${BUSYVER}.tar.bz2 && \
   tar xf busybox-${BUSYVER}.tar.bz2 && \
   rm -f busybox-${BUSYVER}.tar.bz2
@@ -71,19 +79,22 @@ RUN cd busybox-${BUSYVER} && \
 # Add init script
 ADD init ./busybox-${BUSYVER}/_install/init
 # Add vm exploit script
-ADD vm-test-exploit.sh ./busybox-${BUSYVER}/_install/exploit
+ADD vm-demo-exploit.sh ./busybox-${BUSYVER}/_install/demo-exploit
 # Add and build exploit
 ADD exploit.c ./
-RUN gcc -static -o write_anything exploit.c
+RUN gcc -m32 -static -o exploit exploit.c && \
+  mv /home/exploit ./busybox-${BUSYVER}/_install/exploit
 
 # Organise root file strcuture
 RUN cd busybox-${BUSYVER}/_install && \
-  mkdir -p proc sys dev etc etc/init.d && \
+  mkdir -p proc sys dev etc etc/init.d home && \
   chmod +x init && \
-  chmod +x exploit && \
-  mkdir home && \ 
-  cp /home/write_anything home/write_anything
-  
+  chmod +x demo-exploit && \
+  rm bin/busybox
+
+ADD busybox ./busybox-${BUSYVER}/_install/bin/busybox
+RUN chmod +x ./busybox-${BUSYVER}/_install/bin/busybox
+
 # Package up the initramfs
 RUN cd busybox-${BUSYVER}/_install && \
   find . -print0 | cpio --null -ov --format=newc > /home/initramfs
