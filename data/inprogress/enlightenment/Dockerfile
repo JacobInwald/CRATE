@@ -62,9 +62,11 @@ RUN cd enlightenment && \
 
 # ------------- ADD EXPLOIT -------------
 
+RUN useradd user
+
 ADD exploit.sh ./
 RUN chmod +x exploit.sh
-
+RUN chown user exploit.sh
 
 # ---------------- ADD DEMO ----------------
 ADD demo-exploit.sh ./

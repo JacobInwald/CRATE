@@ -16,4 +16,4 @@ run/bash:
 	sudo docker run --rm -it --privileged --entrypoint /bin/sh $(IMAGE_NAME)
 
 run/demo:
-	sudo docker run --rm -it --privileged -e HARDEN_FLAGS=$(HARDEN_FLAGS) --entrypoint ./demo-exploit.sh $(IMAGE_NAME)
+	sudo docker run --rm -it --privileged --cap-add SYS_ADMIN -e HARDEN_FLAGS=$(HARDEN_FLAGS) --entrypoint ./demo-exploit.sh $(IMAGE_NAME)
