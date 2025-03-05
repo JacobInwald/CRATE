@@ -1,4 +1,0 @@
-3c3
-< CFLAGS=-Wall -g
----
-> CFLAGS:=$(CFLAGS) -Wall -g

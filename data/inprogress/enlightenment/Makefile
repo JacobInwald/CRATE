@@ -1,5 +1,5 @@
-# Purpose: Makefile for libiec61850 docker image
-IMAGE_NAME=exiftoolv12
+# Purpose: Makefile for docker image
+IMAGE_NAME=enlightenment
 EXITED:=$(shell sudo docker ps -a -q -f status=exited)
 
 
@@ -10,10 +10,10 @@ build:
 	sudo docker build -t $(IMAGE_NAME) . 
 
 run/zsh:
-	sudo docker run -it --entrypoint /bin/zsh $(IMAGE_NAME)
+	sudo docker run --rm -it --privileged --entrypoint /bin/zsh $(IMAGE_NAME)
 
 run/bash:
-	sudo docker run -it --entrypoint /bin/sh $(IMAGE_NAME)
+	sudo docker run --rm -it --privileged --entrypoint /bin/sh $(IMAGE_NAME)
 
 run/demo:
-	sudo docker run -it -e HARDEN_FLAGS=$(HARDEN_FLAGS) --entrypoint ./demo-exploit.sh $(IMAGE_NAME)
+	sudo docker run --rm -it --privileged -e HARDEN_FLAGS=$(HARDEN_FLAGS) --entrypoint ./demo-exploit.sh $(IMAGE_NAME)
