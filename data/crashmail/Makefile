@@ -16,4 +16,4 @@ run/bash:
 	sudo docker run -it --entrypoint /bin/sh $(IMAGE_NAME)
 
 run/demo:
-	sudo docker run -it -e HARDEN_FLAGS=$(HARDEN_FLAGS) --entrypoint ./demo-exploit.sh $(IMAGE_NAME)
+	sudo docker run -it -e HARDEN_FLAGS="$(HARDEN_FLAGS)" --entrypoint ./demo-exploit.sh $(IMAGE_NAME)

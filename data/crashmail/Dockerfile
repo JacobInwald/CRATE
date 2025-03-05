@@ -41,8 +41,11 @@ RUN cd /opt \
     && curl -L "${PYPY_URL}" | tar -xjf - \
     && ln -s "/opt/${PYPY_ROOT}/bin/pypy2" /usr/local/bin/pypy2
 
+RUN useradd user
+
 ADD exploit.py ./
 RUN chmod +x exploit.py
+RUN chown user exploit.py
 
 # ---------------- ADD DEMO ----------------
 ADD demo-exploit.sh ./
