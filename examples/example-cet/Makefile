@@ -1,5 +1,5 @@
 # Purpose: Makefile for docker image
-IMAGE_NAME=netfilter-test
+IMAGE_NAME=cet
 EXITED:=$(shell sudo docker ps -a -q -f status=exited)
 
 
