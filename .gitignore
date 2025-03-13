@@ -7,3 +7,4 @@
 tmp/
 **/afl_out/
 **/build
+**/*.cpio*
