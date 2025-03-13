@@ -29,12 +29,13 @@ RUN patch crashmail/src/crashmail/pkt.c pkt.patch
 
 # ------------- ADD EXPLOIT -------------
 
-RUN apt-get -y install curl
+RUN apt-get -y install curl gdb gcc-multilib
 
 # Install python 2.7 support for the exploit
 ARG PYPY_VERSION=2.7-v7.3.17
 ARG PYPY_ROOT=pypy$PYPY_VERSION-linux64
 ARG PYPY_URL=https://downloads.python.org/pypy/$PYPY_ROOT.tar.bz2
+
 # Install pypy itself under /opt and symlink the pypy2 binary into
 # /usr/local/bin so that it appears on the PATH.
 RUN cd /opt \
@@ -42,7 +43,6 @@ RUN cd /opt \
     && ln -s "/opt/${PYPY_ROOT}/bin/pypy2" /usr/local/bin/pypy2
 
 RUN useradd user
-
 ADD exploit.py ./
 RUN chmod +x exploit.py
 RUN chown user exploit.py
