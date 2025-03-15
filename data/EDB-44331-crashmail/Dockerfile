@@ -1,10 +1,13 @@
 #syntax=docker/dockerfile:1
-FROM debian:bullseye-slim
+FROM debian:bullseye-slim 
 WORKDIR /home/
+ENV DEBIAN_FRONTEND='noninteractive'
 
+RUN apt-get -y update
+RUN apt-get -y upgrade
 
 # Install core dependencies
-RUN apt-get -y update && apt-get -y install --no-install-recommends \ 
+RUN apt-get -y install --no-install-recommends \ 
     git \
     cmake \
     build-essential \
@@ -15,6 +18,13 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends \
     ninja-build \
     wget \
     ca-certificates
+
+# Intel SDE for unsupported CPUs
+ENV SDE_VERSION="9.48.0-2024-11-25-lin"
+RUN wget https://downloadmirror.intel.com/843185/sde-external-${SDE_VERSION}.tar.xz && \
+    tar -xvf sde-external-${SDE_VERSION}.tar.xz && \
+    rm -rf sde-external-${SDE_VERSION}.tar.xz && \
+    mv sde-external-${SDE_VERSION} sde
 
 
 # ----------------- SETUP SOURCE ---------------
