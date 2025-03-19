@@ -1,5 +1,5 @@
 #syntax=docker/dockerfile:1
-FROM debian:bullseye-slim 
+FROM ubuntu:noble
 WORKDIR /home/
 ENV DEBIAN_FRONTEND='noninteractive'
 
@@ -28,6 +28,8 @@ RUN wget https://downloadmirror.intel.com/843185/sde-external-${SDE_VERSION}.tar
 
 
 # ----------------- SETUP SOURCE ---------------
+
+RUN apt-get install -y gcc-10
 
 # Add source code 
 RUN git clone --single-branch -b 1.6 https://git.code.sf.net/p/ftnapps/crashmail/code crashmail

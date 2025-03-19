@@ -18,7 +18,7 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends \
 
 
 # ----------------- SETUP SOURCE ---------------
-
+RUN apt-get install -y gcc-10
 # Add source code 
 RUN git clone --single-branch -b master https://github.com/skyqinsc/MiniFtp miniFTP
 
