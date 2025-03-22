@@ -1,5 +1,5 @@
 #syntax=docker/dockerfile:1
-FROM debian:bullseye-slim
+FROM ubuntu:noble
 WORKDIR /home/
 
 
@@ -16,6 +16,13 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends \
     wget \
     ca-certificates
 
+
+# Intel SDE for unsupported CPUs
+ENV SDE_VERSION="9.48.0-2024-11-25-lin"
+RUN wget https://downloadmirror.intel.com/843185/sde-external-${SDE_VERSION}.tar.xz && \
+    tar -xvf sde-external-${SDE_VERSION}.tar.xz && \
+    rm -rf sde-external-${SDE_VERSION}.tar.xz && \
+    mv sde-external-${SDE_VERSION} sde
 
 # ----------------- SETUP SOURCE ---------------
 RUN apt-get install -y gcc-10

@@ -29,8 +29,6 @@ RUN wget https://downloadmirror.intel.com/843185/sde-external-${SDE_VERSION}.tar
 
 # ----------------- SETUP SOURCE ---------------
 
-RUN apt-get install -y gcc-10
-
 # Add source code 
 RUN git clone --single-branch -b 1.6 https://git.code.sf.net/p/ftnapps/crashmail/code crashmail
 

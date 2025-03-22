@@ -33,7 +33,6 @@ void vul()
     qsort(l, 2, sizeof(char *), ptraddr_compare);
     input_buffer = l[0];
     guard_buffer = l[1];
-    printf("Hello");   
     /* select target */
     //target = RET_ADDR_PTR;
     //target = OLD_BP_PTR;
@@ -100,7 +99,6 @@ void pre_vul()
 
 int main()
 {
-    printf("Hello");
     remove_files();
     setvbuf(stdout, 0, 2, 0);
     setvbuf(stdin, 0, 2, 0);
