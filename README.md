@@ -23,7 +23,7 @@ The structure is:
 
 ## Usage
 
-Exploring the test cases is quite simple. 
+Exploring the test cases in `attempted`, `data` and `examples` is quite simple.
 All of them have the exact same following commands:
 ```bash
     make build      # Builds the docker image
