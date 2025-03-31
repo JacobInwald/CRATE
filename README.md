@@ -20,7 +20,6 @@ The structure is:
 - `RIPE64`: The forked RIPE64 repository.
 - `writeup`: My writeup in Latex
 
-
 ## Usage
 
 Exploring the test cases in `attempted`, `data` and `examples` is quite simple.
@@ -33,6 +32,8 @@ All of them have the exact same following commands:
     make run/demo   # Runs the demo script for each case study
 ```
 These should be run withing the containing folder of the exploit. 
+
+Each other section of the project has a README file in their folder to provide instructions.
 
 ## Contributions
 
