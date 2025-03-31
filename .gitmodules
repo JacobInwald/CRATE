@@ -4,3 +4,6 @@
 [submodule "writeup"]
 	path = writeup
 	url = https://github.com/JacobInwald/diss-writeup.git
+[submodule "recipe-benchmark"]
+	path = recipe-benchmark
+	url = https://github.com/JacobInwald/recipe-benchmark
