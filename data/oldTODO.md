@@ -1,7 +1,6 @@
 # Research
-
 This just covers some TODOs, and the exploits looked at and worked on. 
-Failed/Unfinished exploits are in the .attempted folder (may be renamed later)
+Failed/Unfinished exploits are in the attempted folder (may be renamed later)
 
 ## TODO List
 

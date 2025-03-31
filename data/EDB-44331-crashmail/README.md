@@ -1,14 +1,12 @@
-# Exploit Title: <exploit_name>
+# Exploit Title: EDB-44331 Crashmail
 
-- Exploit Author: <exploit_author>
-- Vendor Homepage: 
-- Software Link: 
-- Version: 
-- CVE: <exploit_cve> 
+- Exploit Author: Juan Sacco 
+- Vendor Homepage: http://ftnapps.sourceforge.net/crashmail.html 
+- Version: > 1.6 
 
 ## Disclaimer
 
-This is a containerized version of <exploit_cve> for research and testing purposes. This was created as part of my final year project in security research. While running this should be safe, there is no guarantee of safety on your machine. I hold no responsibility for any damages caused to others machines as a result of running any of the exploits in this dataset.
+This is a containerized version of EDB-44331 for research and testing purposes. This was created as part of my final year project in security research. While running this should be safe, there is no guarantee of safety on your machine. I hold no responsibility for any damages caused to others machines as a result of running any of the exploits in this dataset.
 
 ## Instructions 
 

@@ -1,14 +1,12 @@
-# Exploit Title: <exploit_name>
+# Exploit Title: EDB-46807 MiniFTP 
 
-- Exploit Author: <exploit_author>
-- Vendor Homepage: 
-- Software Link: 
-- Version: 
-- CVE: <exploit_cve> 
+- Exploit Author: Strider
+- Vendor Homepage: https://github.com/skyqinsc/MiniFtp
+- Version: All
 
 ## Disclaimer
 
-This is a containerized version of <exploit_cve> for research and testing purposes. This was created as part of my final year project in security research. While running this should be safe, there is no guarantee of safety on your machine. I hold no responsibility for any damages caused to others machines as a result of running any of the exploits in this dataset.
+This is a containerized version of EDB-46807 for research and testing purposes. This was created as part of my final year project in security research. While running this should be safe, there is no guarantee of safety on your machine. I hold no responsibility for any damages caused to others machines as a result of running any of the exploits in this dataset.
 
 ## Instructions 
 
