@@ -1,9 +1,0 @@
-[submodule "RIPE64"]
-	path = RIPE64
-	url = https://github.com/JacobInwald/RIPE64.git
-[submodule "writeup"]
-	path = writeup
-	url = https://github.com/JacobInwald/diss-writeup.git
-[submodule "recipe-benchmark"]
-	path = recipe-benchmark
-	url = https://github.com/JacobInwald/recipe-benchmark
