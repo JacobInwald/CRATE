@@ -12,17 +12,14 @@ This projects key contributions and findings include:
 
 This repository contains the information used for my dissertation, alongside some forks of benchmarks used.
 The structure is:
-- `attempted`: Attempted case studies, but not reproduced.
-- `data`: Reproduced case studies from this project.
-- `examples`: Examples of hardening flags, in the same format as the others.
-- `exploit-db`: The results from the ExploitDB filtering.
-- `recipe-benchmark`: The forked RecIPE repository.
-- `RIPE64`: The forked RIPE64 repository.
-- `writeup`: My writeup in Latex
+- `inprogress`: Attempted case studies, but not reproduced.
+- `completed`: Reproduced case studies from this project.
+- `examples`: Minimal examples of hardening flags, in the same format as the others.
+- `writeup.pdf`: My dissertation/write-up
 
 ## Usage
 
-Exploring the test cases in `attempted`, `data` and `examples` is quite simple.
+Exploring the test cases in `inprogress`, `completed` and `examples` is quite simple.
 All of them have the exact same following commands:
 ```bash
     make build      # Builds the docker image
@@ -37,6 +34,5 @@ Each other section of the project has a README file in their folder to provide i
 
 ## Contributions
 
-As this is university work, I cannot acccept contributions until this course is over.
-If this project sounds interesting to you, check back next year when I can (maybe) open-source this properly.
+If this project sounds interesting to you, feel free to get in contact!
 To add another exploit, simply copy the template found in `data/_template` and get cracking!
